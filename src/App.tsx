@@ -24,6 +24,7 @@ const FB_URL = "https://www.facebook.com/profile.php?id=61577413965523";
 
 export default function App() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isZoomed, setIsZoomed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
@@ -141,85 +142,162 @@ export default function App() {
 
       {/* Hero Section */}
       <section id="hero" className="relative min-h-screen flex items-center pt-20 px-6 overflow-hidden">
-        <div className="absolute inset-0 z-0">
+        <motion.div 
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 20, repeat: Infinity, repeatType: "reverse" }}
+          className="absolute inset-0 z-0"
+        >
           <img 
             src={IMAGES[0]} 
             alt="Sala Bankietowa" 
             className="w-full h-full object-cover brightness-50 contrast-110"
             referrerPolicy="no-referrer"
           />
+        </motion.div>
+        
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 z-1 pointer-events-none overflow-hidden">
+          <motion.div 
+            animate={{ 
+              y: [0, -30, 0],
+              rotate: [0, 5, 0]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            className="absolute -top-20 -left-20 w-80 h-80 bg-[#d4af37]/10 rounded-full blur-3xl"
+          />
+          <motion.div 
+            animate={{ 
+              y: [0, 40, 0],
+              rotate: [0, -5, 0]
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            className="absolute -bottom-20 -right-20 w-96 h-96 bg-[#d4af37]/5 rounded-full blur-3xl"
+          />
         </div>
+
         <div className="relative z-10 max-w-5xl mx-auto text-white text-center md:text-left">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+          <div className="overflow-hidden mb-6">
+            <motion.h2 
+              initial={{ y: 100 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="text-5xl md:text-8xl font-display font-bold tracking-tight leading-tight"
+            >
+              Twoje Wyjątkowe <br /> Wydarzenie w <motion.span 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                className="text-[#d4af37] italic font-medium inline-block"
+              >Markach</motion.span>
+            </motion.h2>
+          </div>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="text-lg md:text-xl mb-10 text-gray-200 max-w-2xl leading-relaxed font-light tracking-wide"
           >
-            <h2 className="text-5xl md:text-8xl font-display font-bold mb-6 tracking-tight leading-tight">
-              Twoje Wyjątkowe <br /> Wydarzenie w <span className="text-[#d4af37] italic font-medium">Markach</span>
-            </h2>
-            <p className="text-lg md:text-xl mb-10 text-gray-200 max-w-2xl leading-relaxed font-light tracking-wide">
-              Zapraszamy do wynajęcia profesjonalnej sali bankietowej na imprezy okolicznościowe. 
-              Elegancja, przestrzeń i niezapomniane wspomnienia.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center md:justify-start items-center">
-              <button 
-                onClick={() => scrollToSection('contact')}
-                className="px-10 py-5 bg-[#d4af37] text-white rounded-full font-semibold hover:bg-[#c19b2e] transition-all flex items-center justify-center gap-2 group shadow-xl uppercase text-xs tracking-widest"
-              >
-                Wynajmij Teraz
-                <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-              <div className="flex items-center gap-4 px-8 py-4 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
-                <Phone size={18} className="text-[#d4af37]" />
-                <div className="text-left">
-                  <p className="text-[10px] text-gray-300 uppercase tracking-[0.2em] font-bold">Infolinia</p>
-                  <p className="font-semibold tracking-wider">509 171 737</p>
-                </div>
+            Zapraszamy do wynajęcia profesjonalnej sali bankietowej na imprezy okolicznościowe. 
+            Elegancja, przestrzeń i niezapomniane wspomnienia.
+          </motion.p>
+          
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="flex flex-col sm:flex-row gap-6 justify-center md:justify-start items-center"
+          >
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="px-10 py-5 bg-[#d4af37] text-white rounded-full font-semibold hover:bg-[#c19b2e] transition-all flex items-center justify-center gap-2 group shadow-xl uppercase text-xs tracking-widest relative overflow-hidden"
+            >
+              <motion.div 
+                className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-500"
+              />
+              <span className="relative z-10">Wynajmij Teraz</span>
+              <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform relative z-10" />
+            </button>
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              className="flex items-center gap-4 px-8 py-4 bg-white/10 backdrop-blur-md rounded-full border border-white/20 shadow-lg"
+            >
+              <Phone size={18} className="text-[#d4af37]" />
+              <div className="text-left">
+                <p className="text-[10px] text-gray-300 uppercase tracking-[0.2em] font-bold">Infolinia</p>
+                <p className="font-semibold tracking-wider italic">509 171 737</p>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-32 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
+      <section id="about" className="py-32 px-6 bg-white relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none select-none">
+          <div className="absolute top-20 right-20 text-[20vw] font-display font-bold text-[#d4af37] rotate-12">NA KOŚCIUSZKI</div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid md:grid-cols-2 gap-20 items-center">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1 }}
             >
-              <div className="inline-flex items-center gap-2 text-[#d4af37] font-bold uppercase tracking-[0.3em] mb-6 text-xs">
+              <motion.div 
+                initial={{ width: 0 }}
+                whileInView={{ width: "auto" }}
+                viewport={{ once: true }}
+                className="inline-flex items-center gap-2 text-[#d4af37] font-bold uppercase tracking-[0.3em] mb-6 text-xs border-b border-[#d4af37]/30 pb-2 overflow-hidden"
+              >
                 <Info size={14} />
                 <span>O nas</span>
-              </div>
+              </motion.div>
               <h3 className="text-4xl md:text-6xl font-display font-bold mb-10 tracking-tight leading-tight text-[#1a1a1a]">
                 Miejsce stworzone na <span className="italic font-medium">wielkie chwile</span>
               </h3>
               <div className="space-y-8 text-gray-600 leading-loose text-lg font-light tracking-wide">
-                <p>
+                <motion.p
+                   initial={{ opacity: 0 }}
+                   whileInView={{ opacity: 1 }}
+                   viewport={{ once: true }}
+                   transition={{ delay: 0.2 }}
+                >
                   Sali bankietowa na Kościuszki w Markach to przestrzeń, w której każda uroczystość nabiera blasku. 
                   Specjalizujemy się w wynajmie sali na wesela, chrzciny, komunie, urodziny oraz spotkania firmowe.
-                </p>
-                <p>
+                </motion.p>
+                <motion.p
+                   initial={{ opacity: 0 }}
+                   whileInView={{ opacity: 1 }}
+                   viewport={{ once: true }}
+                   transition={{ delay: 0.4 }}
+                >
                   Nasza sala łączy w sobie nowoczesne udogodnienia z klasyczną elegancją. Zapewniamy pełne wsparcie 
                   w organizacji, dbając o każdy, nawet najmniejszy detal Twojego wydarzenia.
-                </p>
+                </motion.p>
                 <div className="grid grid-cols-2 gap-12 pt-8">
-                  <div>
+                  <motion.div 
+                    whileInView={{ scale: [0.9, 1.1, 1] }} 
+                    viewport={{ once: true }}
+                    className="p-6 bg-gray-50 rounded-3xl"
+                  >
                     <p className="text-5xl font-display font-bold text-[#d4af37] mb-2 italic">100%</p>
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] leading-tight">Gwarancja Satysfakcji</p>
-                  </div>
-                  <div>
+                  </motion.div>
+                  <motion.div 
+                    whileInView={{ scale: [0.9, 1.1, 1] }} 
+                    viewport={{ once: true }}
+                    className="p-6 bg-gray-50 rounded-3xl"
+                  >
                     <div className="flex items-center gap-2 text-5xl font-display font-bold text-[#1a1a1a] mb-2 italic">
                       <Users size={32} className="text-[#d4af37]" />
                       <span>Top</span>
                     </div>
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] leading-tight">Profesjonalna Obsługa</p>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </motion.div>
@@ -228,32 +306,61 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 1.2, ease: "backOut" }}
             >
-              <img src={IMAGES[5]} alt="Wnętrze" className="w-full h-48 sm:h-64 md:h-[450px] object-cover rounded-[20px] md:rounded-[40px] shadow-xl mt-6 md:mt-12 rotate-[-2deg] transition-transform hover:rotate-0 duration-500" referrerPolicy="no-referrer" />
-              <img src={IMAGES[9]} alt="Wnętrze 2" className="w-full h-48 sm:h-64 md:h-[450px] object-cover rounded-[20px] md:rounded-[40px] shadow-xl rotate-[2deg] transition-transform hover:rotate-0 duration-500" referrerPolicy="no-referrer" />
+              <motion.img 
+                whileHover={{ scale: 1.05, rotate: 0 }}
+                src={IMAGES[5]} 
+                alt="Wnętrze" 
+                className="w-full h-48 sm:h-64 md:h-[450px] object-cover rounded-[20px] md:rounded-[40px] shadow-xl mt-6 md:mt-12 rotate-[-2deg] transition-all duration-500" 
+                referrerPolicy="no-referrer" 
+              />
+              <motion.img 
+                whileHover={{ scale: 1.05, rotate: 0 }}
+                src={IMAGES[9]} 
+                alt="Wnętrze 2" 
+                className="w-full h-48 sm:h-64 md:h-[450px] object-cover rounded-[20px] md:rounded-[40px] shadow-xl rotate-[2deg] transition-all duration-500" 
+                referrerPolicy="no-referrer" 
+              />
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Gallery Section */}
-      <section id="gallery" className="py-32 px-6 bg-[#f8f7f3]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
+      <section id="gallery" className="py-32 px-6 bg-[#f8f7f3] relative overflow-hidden">
+         {/* Decorative circle */}
+        <motion.div 
+          animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
+          transition={{ duration: 20, repeat: Infinity }}
+          className="absolute top-1/4 -right-20 w-64 h-64 border border-[#d4af37]/20 rounded-full"
+        />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
             <h2 className="text-4xl md:text-6xl font-display font-bold tracking-tight mb-6 italic text-[#1a1a1a]">Nasza Galeria</h2>
-            <div className="w-32 h-0.5 bg-[#d4af37] mx-auto opacity-30"></div>
-          </div>
+            <motion.div 
+              initial={{ width: 0 }}
+              whileInView={{ width: 128 }}
+              className="h-0.5 bg-[#d4af37] mx-auto opacity-30"
+            />
+          </motion.div>
           
           <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
             {IMAGES.map((src, idx) => (
               <motion.div
                 key={idx}
                 layout
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: (idx % 3) * 0.1 }}
+                whileHover={{ y: -10 }}
                 className="relative group cursor-zoom-in overflow-hidden rounded-[30px] shadow-lg border border-white/50"
                 onClick={() => setSelectedImage(src)}
               >
@@ -320,26 +427,57 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-[#1a1a1a]/95 flex items-center justify-center p-4 md:p-10"
-            onClick={() => setSelectedImage(null)}
+            className="fixed inset-0 z-50 bg-[#1a1a1a]/95 flex flex-col items-center justify-center p-4 md:p-10 touch-none"
+            onClick={() => {
+              setSelectedImage(null);
+              setIsZoomed(false);
+            }}
           >
+            <div className="absolute top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+              <motion.p 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 0.7, y: 0 }}
+                className="text-white text-[10px] uppercase tracking-[0.2em] font-bold bg-black/40 px-4 py-2 rounded-full border border-white/10"
+              >
+                {isZoomed ? 'Przeciągnij by oglądać • Kliknij by pomniejszyć' : 'Kliknij by przybliżyć'}
+              </motion.p>
+            </div>
+
             <button 
-              className="absolute top-10 right-10 text-white p-3 hover:bg-white/10 rounded-full transition-colors z-50"
-              onClick={() => setSelectedImage(null)}
+              className="absolute top-6 right-6 text-white p-3 hover:bg-white/10 rounded-full transition-colors z-50"
+              onClick={() => {
+                setSelectedImage(null);
+                setIsZoomed(false);
+              }}
               aria-label="Zamknij"
             >
-              <X size={32} strokeWidth={1.5} />
+              <X size={28} strokeWidth={1.5} />
             </button>
-            <motion.img
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              src={selectedImage}
-              alt="Powiększone zdjęcie"
-              className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-              referrerPolicy="no-referrer"
-            />
+            
+            <div className="w-full h-full flex items-center justify-center overflow-hidden">
+              <motion.img
+                key={selectedImage}
+                drag={isZoomed}
+                dragConstraints={{ left: -300, right: 300, top: -300, bottom: 300 }}
+                dragElastic={0.1}
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ 
+                  scale: isZoomed ? 2.5 : 1, 
+                  opacity: 1,
+                  x: isZoomed ? undefined : 0,
+                  y: isZoomed ? undefined : 0
+                }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                src={selectedImage}
+                alt="Powiększone zdjęcie"
+                className={`max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-shadow duration-300 ${isZoomed ? 'cursor-zoom-out shadow-black/60' : 'cursor-zoom-in'}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsZoomed(!isZoomed);
+                }}
+                referrerPolicy="no-referrer"
+              />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
