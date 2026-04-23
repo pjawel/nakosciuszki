@@ -59,7 +59,7 @@ export default function App() {
             <button onClick={() => scrollToSection('hero')} className="hover:text-[#d4af37] transition-colors cursor-pointer">Start</button>
             <button onClick={() => scrollToSection('about')} className="hover:text-[#d4af37] transition-colors cursor-pointer">O nas</button>
             <button onClick={() => scrollToSection('gallery')} className="hover:text-[#d4af37] transition-colors cursor-pointer">Galeria</button>
-            <button onClick={() => scrollToSection('contact')} className="hover:text-[#a67c00] transition-colors cursor-pointer text-[#ffcc33] font-extrabold shadow-sm">Kontakt</button>
+            <button onClick={() => scrollToSection('contact')} className="hover:text-[#d4af37] transition-colors cursor-pointer text-[#ffcc33] font-extrabold shadow-sm">Kontakt</button>
           </div>
 
           <div className="flex items-center gap-4">
