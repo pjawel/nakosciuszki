@@ -8,16 +8,18 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Phone, Facebook, MapPin, X, ChevronRight, Info, Users, Menu } from 'lucide-react';
 
 const IMAGES = [
-  "https://scontent-waw2-2.xx.fbcdn.net/v/t39.30808-6/617942089_122158404176913798_5305752284160035483_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=7b2446&_nc_ohc=3_hw14-5TqYQ7kNvwFw9odN&_nc_oc=AdqaFuRbx83dS0IQmw__tsMLcPBQ_Xec4BU4yr50G9s0pe-cMoViIWO1AJddDUWqdcI&_nc_zt=23&_nc_ht=scontent-waw2-2.xx&_nc_gid=NQ_IzejMQ9Uc-eb1CWlpnQ&_nc_ss=7b3a8&oh=00_Af1kAP5Fo_7I9A6jYFv6YSj3EvfGXE-heUYyyCncaMkkfQ&oe=69EEEDCA",
-  "https://scontent-waw2-1.xx.fbcdn.net/v/t39.30808-6/618539223_122158403660913798_2062612256902205486_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=7b2446&_nc_ohc=sqD6hdHnw8EQ7kNvwHG7VEN&_nc_oc=AdohbJ6UKF-_nP6ZKJ5KCRIrXK5CBH7MRTxYa1N6aBf6G4vUcm-Sdd4qjsisVkllKo4&_nc_zt=23&_nc_ht=scontent-waw2-1.xx&_nc_gid=Q7izV9fhwex_SWfeblrZLg&_nc_ss=7b2a8&oh=00_Af09DUSDEe_wgOvszLAm-OmybbooiW_-tXw9JtBiNyBjbQ&oe=69EF1489",
-  "https://scontent-waw2-2.xx.fbcdn.net/v/t39.30808-6/622243181_122158403468913798_704406558169895705_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=7b2446&_nc_ohc=bZZi1WgSs6IQ7kNvwHbtcUB&_nc_oc=AdrlbRIvOdobp3kWw5o-yMKQKCb8OL_zcr1ljLUMH09DrwGa1RIEqIuRUa9n9arolEU&_nc_zt=23&_nc_ht=scontent-waw2-2.xx&_nc_gid=RhEs3osWEXsVZP4xzc37Sw&_nc_ss=7a3a8&oh=00_Af1h-_L8m2o9RReAnG3cntkqoC2Bh2c_Ah24nwUyFx0x9A&oe=69EF10C9",
-  "https://scontent-waw2-1.xx.fbcdn.net/v/t39.30808-6/619314932_122158403366913798_875823285238555178_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=7b2446&_nc_ohc=N-GFfhVb8aYQ7kNvwGXTVZM&_nc_oc=Adqpf0f8CXDqROkipcjwWQf6YbV7yU-tP95FYGsL31FHVoAbVPyHjyjxU0UYyylCP24&_nc_zt=23&_nc_ht=scontent-waw2-1.xx&_nc_gid=ywlKNdjam9DFLj-UhVVkVA&_nc_ss=7b2a8&oh=00_Af0U1uKvTb06zJbCnzNydR2o4Zo5OsCL3yukyDmfSv-aPg&oe=69EF0B6F",
-  "https://scontent-waw2-2.xx.fbcdn.net/v/t39.30808-6/594434558_122149429130913798_2996274228361189353_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_ohc=-ahILkmxjMQQ7kNvwF5gGhn&_nc_oc=Adqt_qVmx43di3nRib0IBQC_74BvHp61NYeXX8RYL32b9lU5aF0QM52B1aby9DU0Cjc&_nc_zt=23&_nc_ht=scontent-waw2-2.xx&_nc_gid=CORK27Q28OIvFkW-gIlj3w&_nc_ss=7a2a8&oh=00_Af15fGocj3-lP7DntI-xkOAVdGRRlNr7cXFpAeTcq6z0kA&oe=69EF0771",
-  "https://scontent-waw2-2.xx.fbcdn.net/v/t39.30808-6/596489678_122149429142913798_3471364397698014423_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=7b2446&_nc_ohc=V7Xsmz4oBYEQ7kNvwGZoZbQ&_nc_oc=AdoklPr2kbGX20TtK8qalZr8RV58ZWZ4r3EPO1LwrvSUeu21aEbXE1KmSNvr6GVlO9E&_nc_zt=23&_nc_ht=scontent-waw2-2.xx&_nc_gid=wfY3Ga3vxGDuVZl46mQLQQ&_nc_ss=7b2a8&oh=00_Af0yKr0UaWS7xgnnKQ2eLoxQmy6sNw66RHjPxdjwiU0Szg&oe=69EF042D",
-  "https://scontent-waw2-1.xx.fbcdn.net/v/t39.30808-6/532298657_122123877338913798_3904894277331428085_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=7b2446&_nc_ohc=aGzHYCPjI2YQ7kNvwERanYs&_nc_oc=Adq-QSvXcOX9bqZkqlbjSYTyibe2Yi8wHQhh9jOePqeNvxuV8i3IzFLs1FK-j4jUvhA&_nc_zt=23&_nc_ht=scontent-waw2-1.xx&_nc_gid=-lBAGCGQuKV_pvI4Fg627A&_nc_ss=7a2a8&oh=00_Af2n-IISwEYT97cy2IzoYf1WKb9oRpUygouIiRJoy-rD3A&oe=69EF1AE6",
-  "https://scontent-waw2-2.xx.fbcdn.net/v/t39.30808-6/532247183_122123876876913798_1166168006466440025_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=7b2446&_nc_ohc=hYivSJtIc04Q7kNvwGsbCvz&_nc_oc=AdqhomtjqazkmetCbZIIBKmSJLlAaQIB1zlC-c3Xy0M3od7tdNN0JF4ohF8BTsBCx88&_nc_zt=23&_nc_ht=scontent-waw2-2.xx&_nc_gid=0Aof8SbuIgEHJrEyutAkDA&_nc_ss=7a2a8&oh=00_Af2NpR_0FJkWmdt3QhSdzQjto8zubtmjTLNxii405eX4CA&oe=69EEF768",
-  "https://scontent-waw2-2.xx.fbcdn.net/v/t39.30808-6/514350173_122106763844913798_796873879853283276_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=2a1932&_nc_ohc=up4lHjZUYhYQ7kNvwF2Y4nC&_nc_oc=AdqJfZYidcdckaP71zvoJZOH8PEnvV4fzTju984ENJW60wgxEZdFWWRzf1nfIgnlGPs&_nc_zt=23&_nc_ht=scontent-waw2-2.xx&_nc_gid=UgIP1JO7SQGBjpVUKTk7GQ&_nc_ss=7a2a8&oh=00_Af1DqlriXkzgUM5K-pc0fo2tn4DoP2HXTUkeQW42gVG7jQ&oe=69EF1E26",
-  "https://scontent-waw2-1.xx.fbcdn.net/v/t39.30808-6/513976388_122106759002913798_7554716221410850976_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=6vIJDYZzg3AQ7kNvwGIGam_&_nc_oc=AdoI9Sc5wUduhdPCerORWaUiNkbxwhcEDDHd173RyGIhUaN32WdCW1TAsoKLarftG38&_nc_zt=23&_nc_ht=scontent-waw2-1.xx&_nc_gid=EvhE_AlFwl0-bVZNQ6U60A&_nc_ss=7b2a8&oh=00_Af1bw8ZKq28QffkMJOeeJMzMuoxowQQrgFe4aCz0e5Eb0g&oe=69EEF0D6"
+  "https://iili.io/BZRR9Hb.md.jpg",
+  "https://iili.io/BZRAZVS.md.jpg",
+  "https://iili.io/BZRRJOx.md.jpg",
+  "https://iili.io/BZRRHRj.md.jpg",
+  "https://iili.io/BZRRCUg.md.jpg",
+  "https://iili.io/BZRRAWN.md.jpg",
+  "https://iili.io/BZRRIbR.md.jpg",
+  "https://iili.io/BZRRVX2.md.jpg",
+  "https://iili.io/BZRRagn.md.jpg",
+  "https://iili.io/BZRRvmx.md.jpg",
+  "https://iili.io/BZR5oE7.md.jpg",
+  "https://iili.io/BZR5Fpf.md.jpg"
 ];
 
 const FB_URL = "https://www.facebook.com/profile.php?id=61577413965523";
@@ -59,7 +61,7 @@ export default function App() {
             <button onClick={() => scrollToSection('hero')} className="hover:text-[#d4af37] transition-colors cursor-pointer">Start</button>
             <button onClick={() => scrollToSection('about')} className="hover:text-[#d4af37] transition-colors cursor-pointer">O nas</button>
             <button onClick={() => scrollToSection('gallery')} className="hover:text-[#d4af37] transition-colors cursor-pointer">Galeria</button>
-            <button onClick={() => scrollToSection('contact')} className="hover:text-[#d4af37] transition-colors cursor-pointer text-[#ffcc33] font-extrabold shadow-sm">Kontakt</button>
+            <button onClick={() => scrollToSection('contact')} className="hover:text-[#a67c00] transition-colors cursor-pointer text-[#ffcc33] font-extrabold shadow-sm">Kontakt</button>
           </div>
 
           <div className="flex items-center gap-4">
